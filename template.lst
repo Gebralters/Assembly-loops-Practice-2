@@ -1,0 +1,127 @@
+Microsoft (R) Macro Assembler Version 6.11		    07/31/24 22:51:37
+src\template.asm					     Page 1 - 1
+
+
+				;	Update all of this information to reflect your own details and the prac
+				;	Author:     Dr J du Toit
+				;	Template document
+				.386
+				.MODEL FLAT ; Flat memory model
+				.STACK 4096 ; 4096 bytes
+
+				INCLUDE io.inc
+			      C ;
+			      C ; Simple I/O Routines - Version 2
+			      C ;
+			      C 
+			      C IFNDEF IO_INC
+ = 1			      C IO_INC equ <1>
+			      C 
+			      C OutputStr PROTO NEAR32 STDCALL :DWORD
+			      C OutputInt PROTO NEAR32 STDCALL :DWORD
+			      C OutputFloat PROTO NEAR32 STDCALL :DWORD
+			      C OutputFloat8 PROTO NEAR32 STDCALL :QWORD
+			      C InputInt PROTO NEAR32 STDCALL
+			      C InputStr PROTO NEAR32 STDCALL :DWORD, :DWORD
+			      C 
+			      C ELSE
+			      C ENDIF
+			      C 
+				; Exit function
+				ExitProcess PROTO NEAR32 stdcall, dwExitCode:DWORD
+
+				; The data section stores all global variables
+ 00000000			.DATA
+
+ 00000000 45 6E 74 65 72	sr2 BYTE "Enter the first number",10,0
+	   20 74 68 65 20
+	   66 69 72 73 74
+	   20 6E 75 6D 62
+	   65 72 0A 00
+ 00000018 45 6E 74 65 72	sr3 BYTE "Enter the second number",10,0
+	   20 74 68 65 20
+	   73 65 63 6F 6E
+	   64 20 6E 75 6D
+	   62 65 72 0A 00
+ 00000031 0A			sr4 BYTE 10
+
+ 00000032 00000000		num1 DWORD ?
+ 00000036 00000000		num2 DWORD ?
+
+ 00000000			.CODE
+ 00000000			_start:
+ 00000000				INVOKE OutputStr, ADDR sr2
+					INVOKE InputInt
+ 0000000F  BB 00000064			MOV ebx, 100
+ 00000014  99				CDQ
+ 00000015  F7 F3			DIV ebx
+ 00000017  A3 00000032 R		MOV num1, eax
+					
+					INVOKE OutputStr, ADDR sr3
+					INVOKE InputInt
+ 0000002B  BB 00000064			MOV ebx, 100
+ 00000030  99				CDQ
+ 00000031  F7 F3			DIV ebx
+					
+ 00000033  03 05 00000032 R		ADD eax,num1
+					INVOKE OutputInt, eax
+					INVOKE OutputStr, ADDR sr4
+
+				    
+
+					INVOKE ExitProcess, 0
+ 00000050			Public _start
+				END
+Microsoft (R) Macro Assembler Version 6.11		    07/31/24 22:51:37
+src\template.asm					     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000003A DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000050 DWord	  Public  'CODE'	
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+$$$$$$00001  . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000050 Private
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+InputInt . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+InputStr . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+OutputFloat8 . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+OutputFloat  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+OutputInt  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+OutputStr  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+IO_INC . . . . . . . . . . . . .	Text   	 1
+_start . . . . . . . . . . . . .	L Near	 00000000 _TEXT	Public
+num1 . . . . . . . . . . . . . .	DWord	 00000032 _DATA	
+num2 . . . . . . . . . . . . . .	DWord	 00000036 _DATA	
+sr2  . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+sr3  . . . . . . . . . . . . . .	Byte	 00000018 _DATA	
+sr4  . . . . . . . . . . . . . .	Byte	 00000031 _DATA	
+
+	   0 Warnings
+	   0 Errors
